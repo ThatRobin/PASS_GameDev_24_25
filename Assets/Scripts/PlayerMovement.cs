@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     Vector2 moveVector;
 
     [SerializeField]
@@ -16,15 +16,21 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         rb.AddForce(moveVector);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveVector = context.ReadValue<Vector2>() * PlayerStats.GetStat(Stats.MOVE_SPEED);
+        if (moveVector != Vector2.zero)
+        {
+            spriteRenderer.flipX = (moveVector.x > 0);
+        }
 
-        spriteRenderer.flipX = (moveVector.x > 0);
+        Vector2 tempMove = context.ReadValue<Vector2>();
+        tempMove.y = 0;
+        moveVector = tempMove * PlayerStats.GetStat(Stats.MOVE_SPEED);
+
     }
 }

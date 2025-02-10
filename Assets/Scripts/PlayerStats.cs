@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
-    public float moveSpeed, health, damage;
+    public float moveSpeed, health, damage, bulletSpeed;
 
     private static PlayerStats Instance;
 
@@ -19,6 +19,10 @@ public class PlayerStats : MonoBehaviour {
         {
             return playerStats.moveSpeed;
         }
+        if (stat == Stats.BULLET_SPEED)
+        {
+            return playerStats.bulletSpeed;
+        }
         return 0;
     }
 
@@ -29,5 +33,6 @@ public enum Stats
 {
     MOVE_SPEED,
     HEALTH,
-    DAMAGE
+    DAMAGE,
+    BULLET_SPEED
 }
